@@ -1,8 +1,9 @@
 import { useSiteData } from "@/context/SiteDataContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronDown, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import MagneticButton from "./MagneticButton";
 
 const HeroSection = () => {
   const { hero, branding } = useSiteData();
@@ -24,11 +25,10 @@ const HeroSection = () => {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Sliding background images */}
       {images.map((img, i) => (
         <div
           key={i}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${img})`,
             opacity: i === currentBg ? 1 : 0,
@@ -39,7 +39,6 @@ const HeroSection = () => {
       ))}
       <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
 
-      {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -86,15 +85,11 @@ const HeroSection = () => {
                 ? "px-8 py-3.5 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105"
                 : "px-8 py-3.5 border border-foreground/30 text-foreground rounded-full font-semibold hover:border-primary hover:text-primary transition-all hover:scale-105";
 
-            if (isInternal) {
-              return (
-                <Link key={btn.label} to={btn.href} className={baseClass}>
-                  {btn.label}
-                </Link>
-              );
-            }
-
-            return (
+            const content = isInternal ? (
+              <Link key={btn.label} to={btn.href} className={baseClass}>
+                {btn.label}
+              </Link>
+            ) : (
               <a
                 key={btn.label}
                 href={btn.href}
@@ -112,11 +107,16 @@ const HeroSection = () => {
                 {btn.label}
               </a>
             );
+
+            return (
+              <MagneticButton key={btn.label} strength={0.25}>
+                {content}
+              </MagneticButton>
+            );
           })}
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       {hero.scrollIndicator && (
         <motion.div
           initial={{ opacity: 0 }}

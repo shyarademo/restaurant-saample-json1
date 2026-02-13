@@ -1,11 +1,20 @@
 import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useRef } from "react";
 import { Phone, MapPin, Clock, Mail } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeadline from "./SectionHeadline";
+import MagneticButton from "./MagneticButton";
 
 const ContactSection = () => {
   const { contact } = useSiteData();
   const { ref, isVisible } = useScrollAnimation();
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: parallaxRef,
+    offset: ["start end", "end start"],
+  });
+  const mapY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
 
   if (!contact.visible) return null;
 
@@ -22,22 +31,25 @@ const ContactSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10">
-          {/* Map */}
+          {/* Parallax Map */}
           <div
+            ref={parallaxRef}
             className={`rounded-2xl overflow-hidden border border-border h-[350px] lg:h-full transition-all duration-700 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
             }`}
           >
-            <iframe
-              src={contact.mapEmbedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: 350 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Restaurant location"
-            />
+            <motion.div style={{ y: mapY }} className="w-full h-full">
+              <iframe
+                src={contact.mapEmbedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: 350 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Restaurant location"
+              />
+            </motion.div>
           </div>
 
           {/* Info */}
@@ -74,32 +86,38 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Action buttons */}
+            {/* Magnetic CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mt-2">
-              <a
-                href={`https://wa.me/${contact.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-6 py-3.5 bg-primary text-primary-foreground rounded-full font-semibold text-center hover:bg-primary/90 transition-all hover:scale-105"
-              >
-                WhatsApp Us
-              </a>
-              <a
-                href={`tel:${contact.phone}`}
-                className="flex-1 px-6 py-3.5 border border-border text-foreground rounded-full font-semibold text-center hover:border-primary hover:text-primary transition-all hover:scale-105 inline-flex items-center justify-center gap-2"
-              >
-                <Phone size={16} />
-                Call Us
-              </a>
-              <a
-                href={contact.mapDirectionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-6 py-3.5 border border-border text-foreground rounded-full font-semibold text-center hover:border-primary hover:text-primary transition-all hover:scale-105 inline-flex items-center justify-center gap-2"
-              >
-                <MapPin size={16} />
-                Directions
-              </a>
+              <MagneticButton className="flex-1" strength={0.2}>
+                <a
+                  href={`https://wa.me/${contact.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block px-6 py-3.5 bg-primary text-primary-foreground rounded-full font-semibold text-center hover:bg-primary/90 transition-all hover:scale-105"
+                >
+                  WhatsApp Us
+                </a>
+              </MagneticButton>
+              <MagneticButton className="flex-1" strength={0.2}>
+                <a
+                  href={`tel:${contact.phone}`}
+                  className="px-6 py-3.5 border border-border text-foreground rounded-full font-semibold text-center hover:border-primary hover:text-primary transition-all hover:scale-105 inline-flex items-center justify-center gap-2 w-full"
+                >
+                  <Phone size={16} />
+                  Call Us
+                </a>
+              </MagneticButton>
+              <MagneticButton className="flex-1" strength={0.2}>
+                <a
+                  href={contact.mapDirectionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3.5 border border-border text-foreground rounded-full font-semibold text-center hover:border-primary hover:text-primary transition-all hover:scale-105 inline-flex items-center justify-center gap-2 w-full"
+                >
+                  <MapPin size={16} />
+                  Directions
+                </a>
+              </MagneticButton>
             </div>
           </div>
         </div>

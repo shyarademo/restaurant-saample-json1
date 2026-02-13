@@ -2,6 +2,9 @@ import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import SectionHeadline from "./SectionHeadline";
+import GlowCard from "./GlowCard";
+import MagneticButton from "./MagneticButton";
+import ShimmerImage from "./ShimmerImage";
 
 const tagColors: Record<string, string> = {
   bestseller: "bg-primary/20 text-primary",
@@ -27,13 +30,18 @@ const FeaturedMenu = () => {
           }`}
         >
           <SectionHeadline>{featuredMenu.headline}</SectionHeadline>
-          <p className="text-muted-foreground text-lg mt-4">{featuredMenu.subtext}</p>
+          <p
+            className={`text-muted-foreground text-lg mt-4 text-reveal ${
+              isVisible ? "revealed" : ""
+            }`}
+          >
+            {featuredMenu.subtext}
+          </p>
         </div>
 
-        {/* Scrollable cards */}
         <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4">
           {featuredMenu.items.map((item, i) => (
-            <div
+            <GlowCard
               key={item.name}
               className={`flex-shrink-0 w-72 md:w-80 snap-center rounded-2xl overflow-hidden bg-card border border-border group hover:border-primary/40 transition-all duration-500 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -41,10 +49,11 @@ const FeaturedMenu = () => {
               style={{ transitionDelay: isVisible ? `${i * 100}ms` : "0ms" }}
             >
               <div className="relative h-48 overflow-hidden">
-                <img
+                <ShimmerImage
                   src={item.image}
                   alt={item.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  wrapperClassName="h-full"
                   loading="lazy"
                 />
                 <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
@@ -67,17 +76,19 @@ const FeaturedMenu = () => {
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
               </div>
-            </div>
+            </GlowCard>
           ))}
         </div>
 
         <div className="text-center mt-10">
-          <Link
-            to="/menu"
-            className="inline-block px-8 py-3.5 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105"
-          >
-            View Full Menu
-          </Link>
+          <MagneticButton strength={0.25}>
+            <Link
+              to="/menu"
+              className="inline-block px-8 py-3.5 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105"
+            >
+              View Full Menu
+            </Link>
+          </MagneticButton>
         </div>
       </div>
     </section>

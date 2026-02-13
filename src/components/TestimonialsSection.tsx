@@ -2,7 +2,7 @@ import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect } from "react";
 import { Star, Quote } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import SectionHeadline from "./SectionHeadline";
 
 const TestimonialsSection = () => {
@@ -24,6 +24,17 @@ const TestimonialsSection = () => {
     setActiveIndex(i);
   };
 
+  const handleDragEnd = (_: any, info: PanInfo) => {
+    const threshold = 50;
+    if (info.offset.x < -threshold || info.velocity.x < -500) {
+      setDirection(1);
+      setActiveIndex((prev) => (prev + 1) % testimonials.reviews.length);
+    } else if (info.offset.x > threshold || info.velocity.x > 500) {
+      setDirection(-1);
+      setActiveIndex((prev) => (prev - 1 + testimonials.reviews.length) % testimonials.reviews.length);
+    }
+  };
+
   if (!testimonials.visible) return null;
 
   const review = testimonials.reviews[activeIndex];
@@ -41,7 +52,7 @@ const TestimonialsSection = () => {
           <SectionHeadline>{testimonials.headline}</SectionHeadline>
         </div>
 
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto overflow-hidden">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={activeIndex}
@@ -50,7 +61,11 @@ const TestimonialsSection = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -80 * direction }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="bg-card border border-border rounded-2xl p-8 md:p-10 text-center relative"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className="bg-card border border-border rounded-2xl p-8 md:p-10 text-center relative cursor-grab active:cursor-grabbing touch-pan-y"
             >
               <Quote size={32} className="text-primary/20 mx-auto mb-4" />
 
@@ -64,7 +79,7 @@ const TestimonialsSection = () => {
                 ))}
               </div>
 
-              <p className="text-foreground text-lg md:text-xl leading-relaxed italic mb-6">
+              <p className="text-foreground text-lg md:text-xl leading-relaxed italic mb-6 select-none">
                 "{review.text}"
               </p>
 
@@ -77,7 +92,6 @@ const TestimonialsSection = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Dots */}
           <div className="flex justify-center gap-2 mt-8">
             {testimonials.reviews.map((_, i) => (
               <button

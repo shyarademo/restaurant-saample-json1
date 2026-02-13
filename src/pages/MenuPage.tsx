@@ -116,27 +116,43 @@ const MenuPage = () => {
               transition={{ delay: i * 0.05 }}
               className="rounded-2xl overflow-hidden bg-card border border-border group hover:border-primary/40 transition-all duration-300"
             >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  loading="lazy"
-                />
-                <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${
-                        tagColors[tag] || "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
+              {item.image ? (
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                    {item.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${
+                          tagColors[tag] || "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <div className="p-5">
+                {!item.image && item.tags.length > 0 && (
+                  <div className="flex gap-1.5 flex-wrap mb-2">
+                    {item.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${
+                          tagColors[tag] || "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-display text-lg font-semibold text-foreground">{item.name}</h3>
                   <span className="text-primary font-bold text-lg whitespace-nowrap ml-3">{item.price}</span>

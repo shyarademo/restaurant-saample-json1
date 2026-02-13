@@ -1,6 +1,7 @@
 import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useState } from "react";
+import SectionHeadline from "./SectionHeadline";
 
 const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string }) => {
   const [count, setCount] = useState(0);
@@ -63,10 +64,8 @@ const AboutSection = () => {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
             }`}
           >
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              {about.headline}
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-10">
+            <SectionHeadline className="mb-6">{about.headline}</SectionHeadline>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-10 mt-6">
               {about.text}
             </p>
 

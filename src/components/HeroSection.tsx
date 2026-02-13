@@ -1,10 +1,21 @@
 import { useSiteData } from "@/context/SiteDataContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const HeroSection = () => {
   const { hero, branding } = useSiteData();
+  const [currentBg, setCurrentBg] = useState(0);
+  const images = hero.backgroundImages || [hero.backgroundImage];
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   const words = hero.headline.split(" ");
 
@@ -13,11 +24,19 @@ const HeroSection = () => {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${hero.backgroundImage})` }}
-      />
+      {/* Sliding background images */}
+      {images.map((img, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out"
+          style={{
+            backgroundImage: `url(${img})`,
+            opacity: i === currentBg ? 1 : 0,
+            transform: i === currentBg ? "scale(1.05)" : "scale(1)",
+            transition: "opacity 2s ease-in-out, transform 8s ease-in-out",
+          }}
+        />
+      ))}
       <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
 
       {/* Content */}

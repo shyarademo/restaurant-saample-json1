@@ -1,21 +1,33 @@
 import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect } from "react";
-import { Star } from "lucide-react";
+import { Star, Quote } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import SectionHeadline from "./SectionHeadline";
 
 const TestimonialsSection = () => {
   const { testimonials } = useSiteData();
   const { ref, isVisible } = useScrollAnimation();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
     const timer = setInterval(() => {
+      setDirection(1);
       setActiveIndex((prev) => (prev + 1) % testimonials.reviews.length);
     }, 5000);
     return () => clearInterval(timer);
   }, [testimonials.reviews.length]);
 
+  const goTo = (i: number) => {
+    setDirection(i > activeIndex ? 1 : -1);
+    setActiveIndex(i);
+  };
+
   if (!testimonials.visible) return null;
+
+  const review = testimonials.reviews[activeIndex];
+  const initials = review.name.split(" ").map((n) => n[0]).join("").slice(0, 2);
 
   return (
     <section id="testimonials" className="py-24 lg:py-32 bg-secondary/30">
@@ -26,43 +38,51 @@ const TestimonialsSection = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
-            {testimonials.headline}
-          </h2>
+          <SectionHeadline>{testimonials.headline}</SectionHeadline>
         </div>
 
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="relative h-52 md:h-40 overflow-hidden">
-            {testimonials.reviews.map((review, i) => (
-              <div
-                key={i}
-                className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ${
-                  i === activeIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8 pointer-events-none"
-                }`}
-              >
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <Star
-                      key={s}
-                      size={18}
-                      className={s < review.rating ? "fill-primary text-primary" : "text-muted-foreground/30"}
-                    />
-                  ))}
-                </div>
-                <p className="text-foreground text-lg md:text-xl leading-relaxed italic mb-4">
-                  "{review.text}"
-                </p>
-                <span className="text-muted-foreground font-medium">— {review.name}</span>
+        <div className="max-w-2xl mx-auto">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={activeIndex}
+              custom={direction}
+              initial={{ opacity: 0, x: 80 * direction }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -80 * direction }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="bg-card border border-border rounded-2xl p-8 md:p-10 text-center relative"
+            >
+              <Quote size={32} className="text-primary/20 mx-auto mb-4" />
+
+              <div className="flex justify-center gap-1 mb-5">
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <Star
+                    key={s}
+                    size={18}
+                    className={s < review.rating ? "fill-primary text-primary" : "text-muted-foreground/30"}
+                  />
+                ))}
               </div>
-            ))}
-          </div>
+
+              <p className="text-foreground text-lg md:text-xl leading-relaxed italic mb-6">
+                "{review.text}"
+              </p>
+
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm">
+                  {initials}
+                </div>
+                <span className="text-muted-foreground font-medium">{review.name}</span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
           {/* Dots */}
           <div className="flex justify-center gap-2 mt-8">
             {testimonials.reviews.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setActiveIndex(i)}
+                onClick={() => goTo(i)}
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                   i === activeIndex ? "bg-primary w-7" : "bg-muted-foreground/30"
                 }`}

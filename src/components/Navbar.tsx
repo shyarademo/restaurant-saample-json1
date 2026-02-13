@@ -5,17 +5,41 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
-  const { branding, navigation, contact } = useSiteData();
+  const { branding, navigation, contact, specialOffer } = useSiteData();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const hasOffer = specialOffer?.visible;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Active section tracking via IntersectionObserver
+  useEffect(() => {
+    if (!isHome) return;
+    const sectionIds = navigation.map((n) => n.href.replace("#", "")).filter(Boolean);
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { threshold: 0.3, rootMargin: "-80px 0px -40% 0px" }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, [isHome, navigation]);
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
@@ -30,9 +54,9 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "glass border-b border-border/50 py-3" : "bg-transparent py-5"
-        }`}
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+          hasOffer ? "top-9" : "top-0"
+        } ${scrolled ? "glass border-b border-border/50 py-3" : "bg-transparent py-5"}`}
       >
         <div className="container mx-auto flex items-center justify-between px-4 lg:px-8">
           <Link to="/" className="font-display text-xl md:text-2xl font-bold text-foreground tracking-wide">
@@ -41,15 +65,27 @@ const Navbar = () => {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            {navigation.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => handleNavClick(item.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 tracking-wide uppercase"
-              >
-                {item.label}
-              </button>
-            ))}
+            {navigation.map((item) => {
+              const sectionId = item.href.replace("#", "");
+              const isActive = isHome && activeSection === sectionId;
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`text-sm font-medium transition-colors duration-300 tracking-wide uppercase ${
+                    isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  {item.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-underline"
+                      className="h-0.5 bg-primary rounded-full mt-0.5"
+                    />
+                  )}
+                </button>
+              );
+            })}
             {!isHome && (
               <Link
                 to="/"

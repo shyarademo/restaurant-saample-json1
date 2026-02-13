@@ -1,6 +1,7 @@
 import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
+import SectionHeadline from "./SectionHeadline";
 
 const tagColors: Record<string, string> = {
   bestseller: "bg-primary/20 text-primary",
@@ -25,10 +26,8 @@ const FeaturedMenu = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {featuredMenu.headline}
-          </h2>
-          <p className="text-muted-foreground text-lg">{featuredMenu.subtext}</p>
+          <SectionHeadline>{featuredMenu.headline}</SectionHeadline>
+          <p className="text-muted-foreground text-lg mt-4">{featuredMenu.subtext}</p>
         </div>
 
         {/* Scrollable cards */}

@@ -1,9 +1,10 @@
 import { useSiteData } from "@/context/SiteDataContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+
 
 const tagColors: Record<string, string> = {
   bestseller: "bg-primary/20 text-primary",
@@ -18,6 +19,10 @@ const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState(menu.categories[0]?.name || "");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const { ref, isVisible } = useScrollAnimation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const currentCategory = menu.categories.find((c) => c.name === activeCategory);
 

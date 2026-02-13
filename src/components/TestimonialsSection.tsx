@@ -35,10 +35,10 @@ const TestimonialsSection = () => {
     }
   };
 
-  if (!testimonials.visible) return null;
+  if (!testimonials.visible || !testimonials.reviews || testimonials.reviews.length === 0) return null;
 
   const review = testimonials.reviews[activeIndex];
-  const initials = review.name.split(" ").map((n) => n[0]).join("").slice(0, 2);
+  const initials = (review.name || "?").split(" ").map((n) => n[0]).join("").slice(0, 2);
 
   return (
     <section id="testimonials" className="py-24 lg:py-32 bg-secondary/30">

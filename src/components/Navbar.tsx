@@ -161,14 +161,16 @@ const Navbar = () => {
                 >
                   Full Menu
                 </Link>
-                <a
-                  href={`https://wa.me/${contact.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 border border-primary text-primary rounded-full text-center font-semibold"
-                >
-                  WhatsApp Us
-                </a>
+                {contact.whatsapp && (
+                  <a
+                    href={`https://wa.me/${contact.whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3 border border-primary text-primary rounded-full text-center font-semibold"
+                  >
+                    WhatsApp Us
+                  </a>
+                )}
               </div>
             </motion.div>
           </>

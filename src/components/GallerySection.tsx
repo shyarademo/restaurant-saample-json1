@@ -20,9 +20,11 @@ const GallerySection = () => {
 
   if (!gallery.visible) return null;
 
-  const images = gallery.images.map((img: any) =>
-    typeof img === "string" ? { src: img, caption: "" } : img
-  );
+  const images = (gallery.images || [])
+    .map((img: any) => typeof img === "string" ? { src: img, caption: "" } : img)
+    .filter((img: { src: string }) => !!img.src);
+
+  if (images.length === 0) return null;
 
   const openLightbox = (i: number) => setLightboxIndex(i);
   const closeLightbox = () => setLightboxIndex(null);

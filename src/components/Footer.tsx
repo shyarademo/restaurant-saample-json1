@@ -32,7 +32,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-foreground mb-4 uppercase tracking-wider text-sm">Quick Links</h4>
             <div className="flex flex-col gap-2">
-              {navigation.map((item) => (
+              {(navigation || []).map((item) => (
                 <a
                   key={item.label}
                   href={item.href}

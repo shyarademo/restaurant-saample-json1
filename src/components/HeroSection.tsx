@@ -8,7 +8,8 @@ import MagneticButton from "./MagneticButton";
 const HeroSection = () => {
   const { hero, branding } = useSiteData();
   const [currentBg, setCurrentBg] = useState(0);
-  const images = hero.backgroundImages || [hero.backgroundImage];
+  const allImages = hero.backgroundImages || (hero.backgroundImage ? [hero.backgroundImage] : []);
+  const images = allImages.filter(Boolean);
 
   useEffect(() => {
     if (images.length <= 1) return;
@@ -18,7 +19,7 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, [images.length]);
 
-  const words = hero.headline.split(" ");
+  const words = (hero.headline || "").split(" ").filter(Boolean);
 
   return (
     <section
@@ -78,7 +79,7 @@ const HeroSection = () => {
           transition={{ delay: 1.2, duration: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          {hero.cta.map((btn) => {
+          {(hero.cta || []).map((btn) => {
             const isInternal = btn.href.startsWith("/");
             const baseClass =
               btn.variant === "primary"

@@ -58,27 +58,32 @@ const AboutSection = () => {
 
   if (!about.visible) return null;
 
+  const hasImage = !!about.image;
+  const hasStats = about.stats && about.stats.length > 0;
+
   return (
     <section id="about" className="py-24 lg:py-32">
       <div ref={ref} className="container mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className={`grid ${hasImage ? "lg:grid-cols-2" : ""} gap-12 lg:gap-20 items-center`}>
           {/* Parallax Image */}
-          <div
-            ref={parallaxRef}
-            className={`relative overflow-hidden rounded-2xl transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
-            }`}
-          >
-            <motion.div style={{ y: imageY }}>
-              <ShimmerImage
-                src={about.image}
-                alt="About our restaurant"
-                className="w-full h-[400px] lg:h-[500px] object-cover"
-                loading="lazy"
-              />
-            </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
-          </div>
+          {hasImage && (
+            <div
+              ref={parallaxRef}
+              className={`relative overflow-hidden rounded-2xl transition-all duration-1000 ${
+                isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
+              }`}
+            >
+              <motion.div style={{ y: imageY }}>
+                <ShimmerImage
+                  src={about.image}
+                  alt="About our restaurant"
+                  className="w-full h-[400px] lg:h-[500px] object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
+            </div>
+          )}
 
           {/* Text with clip-path reveal */}
           <div
@@ -86,25 +91,29 @@ const AboutSection = () => {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
             }`}
           >
-            <SectionHeadline className="mb-6">{about.headline}</SectionHeadline>
-            <p
-              className={`text-muted-foreground text-lg leading-relaxed mb-10 mt-6 text-reveal ${
-                isVisible ? "revealed" : ""
-              }`}
-            >
-              {about.text}
-            </p>
+            <SectionHeadline className="mb-6">{about.headline || "About Us"}</SectionHeadline>
+            {about.text && (
+              <p
+                className={`text-muted-foreground text-lg leading-relaxed mb-10 mt-6 text-reveal ${
+                  isVisible ? "revealed" : ""
+                }`}
+              >
+                {about.text}
+              </p>
+            )}
 
-            <div className="grid grid-cols-2 gap-6">
-              {about.stats.map((stat) => (
-                <div key={stat.label} className="text-center p-4 rounded-xl bg-secondary/50">
-                  <div className="font-display text-3xl md:text-4xl font-bold text-primary mb-1">
-                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+            {hasStats && (
+              <div className="grid grid-cols-2 gap-6">
+                {about.stats.map((stat) => (
+                  <div key={stat.label} className="text-center p-4 rounded-xl bg-secondary/50">
+                    <div className="font-display text-3xl md:text-4xl font-bold text-primary mb-1">
+                      <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,0 +1,188 @@
+{
+  "branding": {
+    "name": "Ember & Oak",
+    "tagline": "Where Fire Meets Flavor",
+    "logo": "",
+    "colors": {
+      "primary": "36 95% 50%",
+      "primaryForeground": "0 0% 5%",
+      "accent": "25 80% 45%",
+      "accentForeground": "40 60% 95%",
+      "background": "20 15% 6%",
+      "foreground": "40 20% 92%",
+      "card": "20 12% 10%",
+      "cardForeground": "40 20% 92%",
+      "muted": "20 10% 16%",
+      "mutedForeground": "30 10% 55%",
+      "border": "20 10% 18%"
+    }
+  },
+  "navigation": [
+    { "label": "Home", "href": "#hero" },
+    { "label": "About", "href": "#about" },
+    { "label": "Menu", "href": "#featured-menu" },
+    { "label": "Gallery", "href": "#gallery" },
+    { "label": "Reviews", "href": "#testimonials" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "seo": {
+    "title": "Ember & Oak — Where Fire Meets Flavor",
+    "description": "Experience bold, flame-kissed flavors at Ember & Oak. Handcrafted dishes, premium ingredients, unforgettable dining.",
+    "keywords": "restaurant, fine dining, flame-grilled, steakhouse, best restaurant",
+    "ogImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200"
+  },
+  "hero": {
+    "backgroundImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80",
+    "headline": "Where Fire Meets Flavor",
+    "subtext": "Handcrafted dishes forged with passion, served with soul. Every bite tells a story of flame, smoke, and tradition.",
+    "cta": [
+      { "label": "View Menu", "href": "/menu", "variant": "primary" },
+      { "label": "Order on WhatsApp", "href": "https://wa.me/1234567890?text=Hi!%20I'd%20like%20to%20place%20an%20order", "variant": "outline", "icon": "whatsapp" },
+      { "label": "Call Us", "href": "tel:+1234567890", "variant": "outline", "icon": "phone" }
+    ],
+    "scrollIndicator": true
+  },
+  "about": {
+    "visible": true,
+    "headline": "Our Story",
+    "text": "Born from a passion for open-flame cooking and a reverence for honest ingredients, Ember & Oak has been the neighborhood's gathering place since 2015. Our chefs draw inspiration from global wood-fire traditions — from Argentine asado to Japanese robata — to create dishes that are both primal and refined.",
+    "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+    "stats": [
+      { "value": 9, "suffix": "+", "label": "Years of Excellence" },
+      { "value": 150, "suffix": "+", "label": "Signature Dishes" },
+      { "value": 50000, "suffix": "+", "label": "Happy Guests" },
+      { "value": 4.9, "suffix": "★", "label": "Average Rating" }
+    ]
+  },
+  "featuredMenu": {
+    "visible": true,
+    "headline": "Chef's Picks",
+    "subtext": "Our most loved creations, straight from the flame",
+    "items": [
+      {
+        "name": "Smoked Wagyu Brisket",
+        "description": "12-hour oak-smoked wagyu, charred corn salsa, truffle jus",
+        "price": "$48",
+        "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80",
+        "tags": ["bestseller", "non-veg"]
+      },
+      {
+        "name": "Flame-Kissed Salmon",
+        "description": "Cedar plank salmon, miso glaze, pickled ginger, wasabi cream",
+        "price": "$36",
+        "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80",
+        "tags": ["new", "non-veg"]
+      },
+      {
+        "name": "Charred Cauliflower Steak",
+        "description": "Whole roasted cauliflower, romesco, almond crumble, herbs",
+        "price": "$24",
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80",
+        "tags": ["veg", "bestseller"]
+      },
+      {
+        "name": "Ember Burger",
+        "description": "Double smash patty, aged cheddar, caramelized onions, brioche",
+        "price": "$22",
+        "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80",
+        "tags": ["bestseller", "non-veg"]
+      },
+      {
+        "name": "Wood-Fired Margherita",
+        "description": "San Marzano tomatoes, buffalo mozzarella, fresh basil, EVOO",
+        "price": "$18",
+        "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&q=80",
+        "tags": ["veg"]
+      }
+    ]
+  },
+  "menu": {
+    "categories": [
+      {
+        "name": "Starters",
+        "items": [
+          { "name": "Smoky Hummus", "description": "Fire-roasted chickpea hummus, charred pita, olive oil drizzle", "price": "$12", "image": "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=400&q=80", "tags": ["veg"] },
+          { "name": "Grilled Shrimp Skewers", "description": "Lemon herb marinated tiger shrimp, chimichurri", "price": "$16", "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80", "tags": ["non-veg", "spicy"] },
+          { "name": "Burrata & Heirloom Tomato", "description": "Creamy burrata, vine-ripened tomatoes, basil oil, balsamic reduction", "price": "$14", "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=400&q=80", "tags": ["veg", "new"] },
+          { "name": "Chicken Wings", "description": "Smoked and glazed with spicy bourbon sauce", "price": "$15", "image": "https://images.unsplash.com/photo-1608039829572-9b0057aa77c4?w=400&q=80", "tags": ["non-veg", "spicy", "bestseller"] }
+        ]
+      },
+      {
+        "name": "Mains",
+        "items": [
+          { "name": "Smoked Wagyu Brisket", "description": "12-hour oak-smoked wagyu, charred corn salsa, truffle jus", "price": "$48", "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", "tags": ["bestseller", "non-veg"] },
+          { "name": "Flame-Kissed Salmon", "description": "Cedar plank salmon, miso glaze, pickled ginger, wasabi cream", "price": "$36", "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80", "tags": ["new", "non-veg"] },
+          { "name": "Charred Cauliflower Steak", "description": "Whole roasted cauliflower, romesco, almond crumble, herbs", "price": "$24", "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", "tags": ["veg", "bestseller"] },
+          { "name": "Ember Burger", "description": "Double smash patty, aged cheddar, caramelized onions, brioche", "price": "$22", "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80", "tags": ["bestseller", "non-veg"] },
+          { "name": "Lamb Rack", "description": "Herb-crusted lamb rack, rosemary roasted potatoes, red wine jus", "price": "$42", "image": "https://images.unsplash.com/photo-1514516345957-556ca7d90a29?w=400&q=80", "tags": ["non-veg"] },
+          { "name": "Wood-Fired Margherita", "description": "San Marzano tomatoes, buffalo mozzarella, fresh basil, EVOO", "price": "$18", "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&q=80", "tags": ["veg"] }
+        ]
+      },
+      {
+        "name": "Desserts",
+        "items": [
+          { "name": "Smoked Chocolate Lava", "description": "Dark chocolate fondant, smoked vanilla ice cream, salted caramel", "price": "$14", "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&q=80", "tags": ["veg", "bestseller"] },
+          { "name": "Grilled Pineapple", "description": "Caramelized pineapple, coconut sorbet, toasted macadamia", "price": "$11", "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80", "tags": ["veg"] },
+          { "name": "Crème Brûlée", "description": "Classic vanilla bean custard, torched sugar crust", "price": "$12", "image": "https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=400&q=80", "tags": ["veg"] }
+        ]
+      },
+      {
+        "name": "Drinks",
+        "items": [
+          { "name": "Smoky Old Fashioned", "description": "Bourbon, smoked maple syrup, Angostura bitters, orange zest", "price": "$16", "image": "https://images.unsplash.com/photo-1470338745628-171cf53de3a8?w=400&q=80", "tags": ["bestseller"] },
+          { "name": "Ember Lemonade", "description": "Fresh lemon, charred rosemary syrup, sparkling water", "price": "$8", "image": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&q=80", "tags": ["veg", "new"] },
+          { "name": "Red Wine Selection", "description": "Ask our sommelier for today's curated picks", "price": "$14", "image": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&q=80", "tags": [] }
+        ]
+      }
+    ],
+    "gridColumns": 3,
+    "filterTags": ["veg", "non-veg", "spicy", "bestseller", "new"]
+  },
+  "gallery": {
+    "visible": true,
+    "headline": "A Glimpse Inside",
+    "images": [
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80",
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80",
+      "https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=600&q=80",
+      "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80",
+      "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80"
+    ]
+  },
+  "testimonials": {
+    "visible": true,
+    "headline": "What Our Guests Say",
+    "reviews": [
+      { "name": "Sarah M.", "text": "The smoked brisket literally melted in my mouth. Best dining experience in the city, hands down.", "rating": 5 },
+      { "name": "James R.", "text": "The ambiance is incredible — warm, intimate, and the open kitchen adds such energy. We'll be back every weekend.", "rating": 5 },
+      { "name": "Priya K.", "text": "As a vegetarian, I was blown away by the cauliflower steak. Creative, flavorful, and beautifully presented.", "rating": 5 },
+      { "name": "Michael T.", "text": "The Smoky Old Fashioned alone is worth the visit. Pair it with the burger and you're in heaven.", "rating": 4 },
+      { "name": "Lisa Chen", "text": "We hosted our anniversary dinner here. The staff made it magical. Every dish was a masterpiece.", "rating": 5 }
+    ]
+  },
+  "contact": {
+    "visible": true,
+    "headline": "Find Us",
+    "address": "742 Evergreen Terrace, Downtown, Springfield, IL 62704",
+    "phone": "+1234567890",
+    "whatsapp": "1234567890",
+    "email": "hello@emberandoak.com",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215209132!2d-73.9857!3d40.7484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ0JzU0LjIiTiA3M8KwNTknMDguNSJX!5e0!3m2!1sen!2sus!4v1234567890",
+    "openingHours": [
+      { "days": "Monday – Friday", "hours": "12:00 PM – 11:00 PM" },
+      { "days": "Saturday – Sunday", "hours": "10:00 AM – 12:00 AM" }
+    ],
+    "mapDirectionsUrl": "https://maps.google.com/?q=742+Evergreen+Terrace+Springfield+IL"
+  },
+  "social": {
+    "instagram": "https://instagram.com/emberandoak",
+    "facebook": "https://facebook.com/emberandoak",
+    "twitter": "",
+    "tiktok": ""
+  },
+  "layout": {
+    "sectionOrder": ["hero", "about", "featuredMenu", "gallery", "testimonials", "contact"],
+    "menuPage": true
+  }
+}

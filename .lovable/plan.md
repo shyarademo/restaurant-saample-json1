@@ -1,72 +1,105 @@
-# "WOW Factor" UI Improvements Plan
 
-Here are the high-impact visual and interactive upgrades that will make customers say "WOW" when they visit the site.
 
-## 1. Hero Section image
+# Premium Immersive UX Improvements
 
-Instead of a static Hero image, make it tick imagess from the gallery tagged as Interior, and make them slowly transition into one another in the background.
+Enhancements focused on making the user feel completely absorbed in the experience -- smoother transitions, richer micro-interactions, and a more tactile, cinematic feel throughout.
 
 ---
 
-## 2. Scroll Progress Bar
+## 1. Smooth Page Transition Animation
 
-A thin amber/gold progress bar at the very top of the page that fills as the user scrolls down. It adds a premium, app-like feel and subtly tells the user how much content is left.
+When navigating between Home and the Menu page, add a full-screen fade-to-black transition instead of an instant page swap. This creates a cinematic "scene change" feel, like turning a page in a luxury book.
 
----
-
-## 4. Section Dividers with Decorative Elements
-
-Between sections, add elegant decorative dividers -- a subtle ornamental line or a small fork/knife icon with thin lines extending outward. This replaces the abrupt section transitions with something visually polished.
+**Technical**: Wrap `Routes` in a framer-motion `AnimatePresence` with a shared layout transition. Each page fades out then fades in with a subtle scale.
 
 ---
 
-## 5. Testimonials Card Carousel (Not Just Text Fade)
+## 2. Staggered Section Reveal with Parallax Depth
 
-Upgrade from a simple text crossfade to proper card-style testimonials with customer avatars/initials, quotation marks, and a horizontal slide animation. Each card feels tangible and trustworthy.
+Currently sections fade in uniformly. Upgrade to a layered parallax effect where background elements (images, decorative lines) move at a different speed than foreground text. This creates a sense of depth as you scroll, making the page feel three-dimensional rather than flat.
 
----
-
-## 7. Animated Section Headlines with Accent Underline
-
-Each section headline gets a short, animated gold underline that draws itself in as the section scrolls into view. This adds a signature visual flourish to every section.
+**Technical**: Use framer-motion `useScroll` + `useTransform` on the About image, Gallery images, and Contact map to shift them at 80% scroll speed while text stays at 100%.
 
 ---
 
-## 8. Back-to-Top Button
+## 3. Cursor-Following Glow Effect on Cards
 
-A smooth scroll-to-top button that appears after scrolling past the hero section. Styled as a subtle circle with an up-arrow, matching the amber theme.
+When hovering over menu cards and gallery items, add a soft radial glow that follows the mouse cursor position within the card. This creates a premium, "lit from within" effect that makes the cards feel interactive and alive.
 
----
-
-## 9. Gallery and Image Hover Caption Reveal
-
-Gallery images reveal a subtle caption overlay on hover (e.g., "Our Kitchen", "Signature Plating") that slides up from the bottom. Captions are configurable from the JSON file.  
-Also the gallery should not be vertically stacked in smaller screen devices, it should be a horizontally scrollable gallery.
+**Technical**: Track `onMouseMove` on cards, calculate cursor position relative to the card, and apply a CSS radial-gradient background at that position with a warm amber glow.
 
 ---
 
-## 10. Navbar Active Section Highlighting
+## 4. Smooth Number Counter with Easing
 
-As the user scrolls through sections, the corresponding nav link in the top bar lights up with the primary color, giving clear wayfinding feedback.
+The stat counters in the About section currently increment linearly. Upgrade to an ease-out curve so numbers accelerate fast then slow down near the target -- this feels much more natural and satisfying. Also add a subtle scale-up pulse when the counter finishes.
 
----
-
-## 11. Footer with Animated Social Icons
-
-Social media icons in the footer get proper brand icons (Instagram, Facebook logos) instead of plain letters, with a hover lift + color animation.
+**Technical**: Replace the linear interval with a requestAnimationFrame loop using an easeOutExpo timing function.
 
 ---
 
-## 12. "Special Offers" Banner (Optional, JSON-Toggled)
+## 5. Magnetic Hover on CTA Buttons
 
-A slim, animated banner just below the navbar (or above the hero) that can announce offers like "20% off on weekday lunches!" -- fully controlled from JSON with show/hide toggle.
+Make primary CTA buttons (hero buttons, "View Full Menu", contact actions) slightly follow the cursor when hovering near them, creating a magnetic pull effect. This subtle interaction makes buttons feel alive and premium.
+
+**Technical**: Use `onMouseMove` on button wrappers to calculate offset and apply a small `transform: translate()` toward the cursor, with a spring-back on mouse leave.
 
 ---
 
-## Technical Details
+## 6. Text Reveal with Clip-Path Animation
 
-- All new features will be JSON-configurable (toggle on/off, customize text/links)
-- New components: `ScrollProgress.tsx`, `BackToTop.tsx`, `SectionDivider.tsx`, `SpecialOfferBanner.tsx`
-- Modified components: `HeroSection.tsx` (Ken Burns), `Navbar.tsx` (active highlighting), `TestimonialsSection.tsx` (card carousel), `FeaturedMenu.tsx` and `MenuPage.tsx` (hover overlay), `GallerySection.tsx` (captions), `Footer.tsx` (social icons), all section headlines (animated underline)
-- `siteData.json` gets new fields for gallery captions, special offer text, and feature toggles
-- No new dependencies needed -- all achievable with existing framer-motion + Tailwind + lucide-react
+Section body text (About paragraph, featured menu subtext) currently just fades in. Upgrade to a clip-path reveal where text slides in from behind an invisible curtain -- like a theater reveal. This is more dramatic and premium than a simple fade.
+
+**Technical**: Use CSS `clip-path: inset(0 100% 0 0)` transitioning to `inset(0 0% 0 0)` triggered by the scroll animation hook.
+
+---
+
+## 7. Gallery Lightbox with Navigation and Blur Background
+
+The current lightbox just shows a single image. Upgrade to include left/right arrow navigation between gallery images, a blurred background of the current image (instead of plain dark), and a smooth scale + rotation micro-animation on image switch.
+
+**Technical**: Track lightbox index, add prev/next buttons, use the gallery image as a blurred full-screen background behind the sharp centered image.
+
+---
+
+## 8. Testimonial Swipe Gesture Support
+
+On mobile, allow users to swipe left/right on testimonials instead of only tapping dots. This makes the carousel feel native and intuitive on touch devices.
+
+**Technical**: Use framer-motion's `drag="x"` with `dragConstraints` and `onDragEnd` velocity detection to trigger slide changes.
+
+---
+
+## 9. Scroll-Linked Navbar Blur Intensification
+
+Instead of the navbar instantly switching between transparent and glass, make the blur and background opacity gradually increase based on scroll position. At 0px scroll it's fully transparent; by 100px it's fully frosted glass. This creates a seamless, continuous transition.
+
+**Technical**: Use a scroll listener to calculate a 0-1 progress value and apply it to backdrop-filter blur amount and background opacity via inline styles.
+
+---
+
+## 10. Loading Shimmer on Images
+
+Before images load, show an elegant dark shimmer/skeleton placeholder instead of blank space. This prevents layout shift and adds a polished feel during image loading.
+
+**Technical**: Add a CSS shimmer animation on image containers, hide it once the image's `onLoad` fires.
+
+---
+
+## Components Modified
+
+- `src/App.tsx` -- page transition wrapper
+- `src/components/HeroSection.tsx` -- magnetic buttons
+- `src/components/AboutSection.tsx` -- parallax image, improved counters, text reveal
+- `src/components/FeaturedMenu.tsx` -- cursor glow on cards, magnetic CTA
+- `src/components/GallerySection.tsx` -- parallax, cursor glow, enhanced lightbox
+- `src/components/TestimonialsSection.tsx` -- swipe gestures
+- `src/components/ContactSection.tsx` -- parallax map, magnetic buttons
+- `src/components/Navbar.tsx` -- gradual blur transition
+
+## New Utilities
+
+- Reusable `MagneticButton` wrapper component
+- Reusable `GlowCard` wrapper component
+- CSS shimmer animation added to `index.css`
+

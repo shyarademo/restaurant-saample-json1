@@ -62,46 +62,50 @@ const MenuPage = () => {
 
       <div ref={ref} className="container mx-auto px-4 lg:px-8 pb-24">
         {/* Category Tabs */}
-        <div className="flex gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
-          {menu.categories.map((cat) => (
-            <button
-              key={cat.name}
-              onClick={() => { setActiveCategory(cat.name); setActiveFilters([]); }}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
-                activeCategory === cat.name
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+        {menu.categories && menu.categories.length > 0 && (
+          <div className="flex gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
+            {menu.categories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => { setActiveCategory(cat.name); setActiveFilters([]); }}
+                className={`px-6 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
+                  activeCategory === cat.name
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-secondary text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Filter Tags */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {menu.filterTags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => toggleFilter(tag)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border ${
-                activeFilters.includes(tag)
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border text-muted-foreground hover:border-muted-foreground"
-              }`}
-            >
-              {tag}
-            </button>
-          ))}
-          {activeFilters.length > 0 && (
-            <button
-              onClick={() => setActiveFilters([])}
-              className="px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground underline"
-            >
-              Clear filters
-            </button>
-          )}
-        </div>
+        {menu.filterTags && menu.filterTags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-8">
+            {menu.filterTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => toggleFilter(tag)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border ${
+                  activeFilters.includes(tag)
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border text-muted-foreground hover:border-muted-foreground"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+            {activeFilters.length > 0 && (
+              <button
+                onClick={() => setActiveFilters([])}
+                className="px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground underline"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Menu Grid */}
         <div

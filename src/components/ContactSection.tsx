@@ -1,6 +1,7 @@
 import { useSiteData } from "@/context/SiteDataContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Phone, MapPin, Clock, Mail } from "lucide-react";
+import SectionHeadline from "./SectionHeadline";
 
 const ContactSection = () => {
   const { contact } = useSiteData();
@@ -17,9 +18,7 @@ const ContactSection = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
-            {contact.headline}
-          </h2>
+          <SectionHeadline>{contact.headline}</SectionHeadline>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10">

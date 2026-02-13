@@ -8,6 +8,10 @@ import GallerySection from "@/components/GallerySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
+import BackToTop from "@/components/BackToTop";
+import SectionDivider from "@/components/SectionDivider";
+import SpecialOfferBanner from "@/components/SpecialOfferBanner";
 
 const Index = () => {
   const { seo, branding } = useSiteData();
@@ -24,14 +28,22 @@ const Index = () => {
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="min-h-screen bg-background">
+        <ScrollProgress />
+        <SpecialOfferBanner />
         <Navbar />
         <HeroSection />
+        <SectionDivider />
         <AboutSection />
+        <SectionDivider />
         <FeaturedMenu />
+        <SectionDivider />
         <GallerySection />
+        <SectionDivider />
         <TestimonialsSection />
+        <SectionDivider />
         <ContactSection />
         <Footer />
+        <BackToTop />
       </div>
     </>
   );

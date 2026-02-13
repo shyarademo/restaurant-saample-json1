@@ -25,22 +25,20 @@ const GallerySection = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[220px]">
           {gallery.images.map((img, i) => (
             <div
               key={i}
               onClick={() => setLightbox(img)}
               className={`relative overflow-hidden rounded-xl cursor-pointer group transition-all duration-700 ${
-                i === 0 || i === 5 ? "row-span-2" : ""
+                i === 0 || i === 5 ? "md:row-span-2" : ""
               } ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
               style={{ transitionDelay: isVisible ? `${i * 80}ms` : "0ms" }}
             >
               <img
                 src={img}
                 alt={`Gallery ${i + 1}`}
-                className={`w-full object-cover group-hover:scale-110 transition-transform duration-700 ${
-                  i === 0 || i === 5 ? "h-full min-h-[300px] md:min-h-[400px]" : "h-48 md:h-56"
-                }`}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-background/0 group-hover:bg-background/30 transition-colors duration-300" />

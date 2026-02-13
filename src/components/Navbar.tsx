@@ -6,20 +6,23 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const { branding, navigation, contact, specialOffer } = useSiteData();
-  const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const location = useLocation();
   const isHome = location.pathname === "/";
   const hasOffer = specialOffer?.visible;
 
+  // Gradual blur based on scroll position (0 to 1 over 100px)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const progress = Math.min(window.scrollY / 100, 1);
+      setScrollProgress(progress);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Active section tracking via IntersectionObserver
   useEffect(() => {
     if (!isHome) return;
     const sectionIds = navigation.map((n) => n.href.replace("#", "")).filter(Boolean);
@@ -54,16 +57,21 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
           hasOffer ? "top-9" : "top-0"
-        } ${scrolled ? "glass border-b border-border/50 py-3" : "bg-transparent py-5"}`}
+        }`}
+        style={{
+          backdropFilter: `blur(${scrollProgress * 12}px) saturate(${100 + scrollProgress * 80}%)`,
+          backgroundColor: `hsla(20, 12%, 10%, ${scrollProgress * 0.7})`,
+          borderBottom: scrollProgress > 0.5 ? `1px solid hsl(20 10% 18% / ${scrollProgress})` : "none",
+          padding: `${1.25 - scrollProgress * 0.5}rem 0`,
+        }}
       >
         <div className="container mx-auto flex items-center justify-between px-4 lg:px-8">
           <Link to="/" className="font-display text-xl md:text-2xl font-bold text-foreground tracking-wide">
             {branding.name}
           </Link>
 
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             {navigation.map((item) => {
               const sectionId = item.href.replace("#", "");
@@ -102,7 +110,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
             className="md:hidden text-foreground p-2"
@@ -113,7 +120,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <>
